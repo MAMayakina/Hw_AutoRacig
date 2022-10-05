@@ -30,12 +30,12 @@ public class Bus extends Transport implements Competing {
         System.out.println("Автобус " + getModel() + " на пит-стопе");
     }
 
-    public void getBestLapTime() {
+    public void bestLapTime() {
         System.out.println("Автобус " + getModel() + " показал лучшее время на круге");
     }
 
-    public void getMaxSpeedOnRace() {
-        System.out.println("Макс.скорость автобуса " + getModel() + " - " + getMaxSpeed() + "км/ч");
+    public void maxSpeedOnRace() {
+        System.out.println("Автобус " + getModel() + " достиг своей макс.скорости на гонке - " + getMaxSpeed() + "км/ч");
     }
 
     @Override

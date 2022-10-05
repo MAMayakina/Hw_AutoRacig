@@ -4,9 +4,9 @@ public interface Competing {
 
     void pitStop();
 
-    void getBestLapTime();
+    void bestLapTime();
 
-    void getMaxSpeedOnRace();
+    void maxSpeedOnRace();
 
 
 

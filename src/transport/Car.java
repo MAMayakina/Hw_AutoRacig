@@ -11,7 +11,6 @@ public class Car extends Transport implements Competing {
             this.color = checkParametr(color);
             this.type="Car";
         }
-
     }
 
     public void startMovement() {
@@ -27,12 +26,12 @@ public class Car extends Transport implements Competing {
         System.out.println("Автомобиль " + getModel() + " на пит-стопе");
     }
 
-    public void getBestLapTime() {
+    public void bestLapTime() {
         System.out.println("Автомобиль " + getModel() + " показал лучшее время на круге");
     }
 
-    public void getMaxSpeedOnRace() {
-        System.out.println("Макс.скорость автомобиля " + getModel() + " - " + getMaxSpeed() + "км/ч");
+    public void maxSpeedOnRace() {
+        System.out.println("Автомобиль " + getModel() + " достиг своей макс.скорости на гонке - " + getMaxSpeed() + "км/ч");
     }
 
     @Override

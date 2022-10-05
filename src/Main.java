@@ -1,3 +1,7 @@
+import driver.Driver;
+import driver.DriverB;
+import driver.DriverC;
+import driver.DriverD;
 import transport.Bus;
 import transport.Car;
 import transport.Truck;
@@ -19,27 +23,18 @@ public class Main {
         Bus bus3 = new Bus("Кавз", "Кавз-4270", 6.6, 100, 84);
         Bus bus4 = new Bus("МАЗ", "МАЗ-203", 6.4, 90, 102);
 
-        Driver<Car> driver1 = new Driver<>("Владимир", 10);
-        driver1.defineTransport(car1);
-        Driver<Bus> driver2 = new Driver<>("Евгений", 5);
-        driver2.defineTransport(bus1);
-        Driver<Truck> driver3 = new Driver<>("Дмитрий", 15);
-        driver3.defineTransport(truck3);
-        Driver<Car> driver4 = new Driver<>("Михаил", 4);
+        DriverB<Car> driver1 = new DriverB<Car>("Владимир", 10);
+        driver1.defineLicenseAndTransport(car1);
+        DriverD<Bus> driver2 = new DriverD<Bus>("Евгений", 5);
+        driver2.defineLicenseAndTransport(bus1);
+        DriverC<Truck> driver3 = new DriverC<Truck>("Дмитрий", 15);
+        driver3.defineLicenseAndTransport(truck3);
+        DriverC<Truck> driver4 = new DriverC<Truck>("Михаил", 4);
 
         System.out.println("*** Общая информация:");
         System.out.println(car1);
-        System.out.println(car2);
-        System.out.println(car3);
-        System.out.println(car4);
         System.out.println(truck1);
-        System.out.println(truck2);
-        System.out.println(truck3);
-        System.out.println(truck4);
         System.out.println(bus1);
-        System.out.println(bus2);
-        System.out.println(bus3);
-        System.out.println(bus4);
 
         System.out.println();
         System.out.println("*** Проверка методов начинаю и заканчиваю движение:");
@@ -53,14 +48,14 @@ public class Main {
         System.out.println();
         System.out.println("*** Проверка пит-стоп, лучшее время, макс.скорость:");
         car1.pitStop();
-        car2.getBestLapTime();
-        car3.getMaxSpeedOnRace();
+        car2.bestLapTime();
+        car3.maxSpeedOnRace();
         truck1.pitStop();
-        truck2.getBestLapTime();
-        truck3.getMaxSpeedOnRace();
+        truck2.bestLapTime();
+        truck3.maxSpeedOnRace();
         bus1.pitStop();
-        bus2.getBestLapTime();
-        bus3.getMaxSpeedOnRace();
+        bus2.bestLapTime();
+        bus3.maxSpeedOnRace();
 
         System.out.println();
         System.out.println("*** Водители:");

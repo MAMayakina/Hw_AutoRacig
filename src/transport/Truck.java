@@ -16,7 +16,6 @@ public class Truck extends Transport implements Competing {
             }
 
         }
-
     }
 
     public void startMovement() {
@@ -31,12 +30,12 @@ public class Truck extends Transport implements Competing {
         System.out.println("Грузовик " + getModel() + " на пит-стопе");
     }
 
-    public void getBestLapTime() {
+    public void bestLapTime() {
         System.out.println("Грузовик " + getModel() + " показал лучшее время на круге");
     }
 
-    public void getMaxSpeedOnRace() {
-        System.out.println("Макс.скорость грузовика " + getModel() + " - " + getMaxSpeed() + "км/ч");
+    public void maxSpeedOnRace() {
+        System.out.println("Грузовик " + getModel() + " достиг своей макс.скорости на гонке - " + getMaxSpeed() + "км/ч");
     }
 
     @Override

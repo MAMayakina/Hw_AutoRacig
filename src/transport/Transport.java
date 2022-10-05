@@ -41,12 +41,12 @@ public abstract class Transport {
         System.out.println("Транспорт " + model + " на пит-стопе");
     }
 
-    public void getBestLapTime() {
+    public void bestLapTime() {
         System.out.println("Транспорт " + model + " показал лучшее время на круге");
     }
 
-    public void getMaxSpeedOnRace() {
-        System.out.println("Макс.скорость " + model + " - " + getMaxSpeed() + "км/ч");
+    public void maxSpeedOnRace() {
+        System.out.println(model + " достиг своей макс.скорости на гонке - " + getMaxSpeed() + "км/ч");
     }
 
     @Override
