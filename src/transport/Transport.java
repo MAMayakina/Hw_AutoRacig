@@ -49,6 +49,9 @@ public abstract class Transport {
         System.out.println(model + " достиг своей макс.скорости на гонке - " + getMaxSpeed() + "км/ч");
     }
 
+    public abstract String getTypeOfTransport();
+
+
     @Override
     public String toString() {
         return "бренд " + brand +

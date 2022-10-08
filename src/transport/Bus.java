@@ -3,19 +3,36 @@ package transport;
 import java.util.Objects;
 
 public class Bus extends Transport implements Competing {
-    private int numberOfSeats;
+    public enum CapacityBus {
+        ESPECIALLY_SMALL("особо малая", 10),
+        SMALL("малая", 25),
+        MEDIUM("средняя", 50),
+        LARGE("большая", 80),
+        ESPECIALLY_LARGE("особо большая", 120);
 
-    public Bus(String brand, String model, double engineVolume, int maxSpeed, int numberOfSeats) {
-        super(brand, model, engineVolume, maxSpeed);
-        this.type="Bus";
-        if (!getBrand().equals(UNKNOW_VALUES) && !getModel().equals(UNKNOW_VALUES)) {
-            if (numberOfSeats < 0) {
-                this.numberOfSeats = 0;
-            } else {
-                this.numberOfSeats = numberOfSeats;
-            }
+        private String capacity;
+        private int maxNumber;
 
+        CapacityBus(String capacity, int maxNumber) {
+            this.capacity = capacity;
+            this.maxNumber = maxNumber;
         }
+
+        public String getCapacity() {
+            return capacity;
+        }
+
+        public int getMaxNumber() {
+            return maxNumber;
+        }
+    }
+
+    private CapacityBus capacityBus;
+
+    public Bus(String brand, String model, double engineVolume, int maxSpeed, CapacityBus capacityBus) {
+        super(brand, model, engineVolume, maxSpeed);
+        this.type = "Bus";
+        this.capacityBus = capacityBus;
     }
 
     public void startMovement() {
@@ -38,13 +55,21 @@ public class Bus extends Transport implements Competing {
         System.out.println("Автобус " + getModel() + " достиг своей макс.скорости на гонке - " + getMaxSpeed() + "км/ч");
     }
 
+    public String getTypeOfTransport() {
+        if (capacityBus == null) {
+            return "Данных по " + getModel() + "недостаточно";
+        } else {
+            return "Вместимость " + getModel() + " - " + capacityBus.capacity + " (макс. число мест " + capacityBus.maxNumber + ")";
+        }
+    }
+
     @Override
     public String toString() {
         return "бренд " + getBrand() +
                 ", модель " + getModel() +
-                ", объем двигателя " + getEngineVolume() + "л" +
-                ", макс.скорость " + getMaxSpeed() + "км/ч" +
-                ", вместимость " + numberOfSeats + "чел";
+                ", объем двигателя - " + getEngineVolume() + "л" +
+                ", макс.скорость - " + getMaxSpeed() + "км/ч" +
+                ", вместимость - " + capacityBus.capacity + " (макс. число мест " + capacityBus.maxNumber + ")";
     }
 
     @Override
@@ -53,15 +78,15 @@ public class Bus extends Transport implements Competing {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Bus bus = (Bus) o;
-        return numberOfSeats == bus.numberOfSeats;
+        return capacityBus == bus.capacityBus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), numberOfSeats);
+        return Objects.hash(super.hashCode(), capacityBus);
     }
 
-    public int getNumberOfSeats() {
-        return numberOfSeats;
+    public CapacityBus getCapacityBus() {
+        return capacityBus;
     }
 }

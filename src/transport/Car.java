@@ -2,14 +2,40 @@ package transport;
 
 import java.util.Objects;
 
-public class Car extends Transport implements Competing {
-    private String color;
 
-    public Car(String brand, String model, double engineVolume, int maxSpeed, String color) {
+public class Car extends Transport implements Competing {
+
+    public enum BodyType {
+        SEDAN("седан"),
+        HATCHBACK("хетчбек"),
+        COUPE("купе"),
+        STATION_WAGON("универсал"),
+        OFFROAD_CAR("внедорожник"),
+        CROSSOVER("кроссовер"),
+        PICKUP("пикап"),
+        VAN("фургон"),
+        MINIVAN("минивен");
+
+        private String type;
+
+        BodyType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
+
+    private String color;
+    private BodyType bodyType;
+
+    public Car(String brand, String model, BodyType bodyType, double engineVolume, int maxSpeed, String color) {
         super(brand, model, engineVolume, maxSpeed);
+
         if (!getBrand().equals(UNKNOW_VALUES) && !getModel().equals(UNKNOW_VALUES)) {
             this.color = checkParametr(color);
-            this.type="Car";
+            this.bodyType = bodyType;
         }
     }
 
@@ -34,13 +60,23 @@ public class Car extends Transport implements Competing {
         System.out.println("Автомобиль " + getModel() + " достиг своей макс.скорости на гонке - " + getMaxSpeed() + "км/ч");
     }
 
+    public String getTypeOfTransport() {
+        if (bodyType == null) {
+            return "Данных по " + getModel() + "недостаточно";
+        } else {
+            return "Тип кузова " + getModel() + " - " + bodyType.type;
+        }
+
+    }
+
     @Override
     public String toString() {
         return "бренд " + getBrand() +
                 ", модель " + getModel() +
-                ", объем двигателя " + getEngineVolume() + "л" +
-                ", макс.скорость " + getMaxSpeed() + "км/ч" +
-                ", цвет " + color;
+                ", тип кузова - " + bodyType.type +
+                ", объем двигателя - " + getEngineVolume() + "л" +
+                ", макс.скорость - " + getMaxSpeed() + "км/ч" +
+                ", цвет - " + color;
     }
 
     @Override
@@ -65,5 +101,9 @@ public class Car extends Transport implements Competing {
         if (!color.isEmpty() && !color.isBlank()) {
             this.color = color;
         }
+    }
+
+    public BodyType getBodyType() {
+        return bodyType;
     }
 }

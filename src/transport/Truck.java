@@ -3,19 +3,28 @@ package transport;
 import java.util.Objects;
 
 public class Truck extends Transport implements Competing {
-    private double loadCapacity;
+    public enum LoadCapacity {
+        N1("полная масса до 3,5т"),
+        N2("полная масса свыше 3,5т до 12т"),
+        N3("полная масса свыше 12т");
 
-    public Truck(String brand, String model, double engineVolume, int maxSpeed, double loadCapacity) {
-        super(brand, model, engineVolume, maxSpeed);
-        this.type="Truck";
-        if (!getBrand().equals(UNKNOW_VALUES) && !getModel().equals(UNKNOW_VALUES)) {
-            if (loadCapacity < 0) {
-                this.loadCapacity = 0;
-            } else {
-                this.loadCapacity = loadCapacity;
-            }
+        private String loadCapacityString;
 
+        LoadCapacity(String loadCapacityString) {
+            this.loadCapacityString = loadCapacityString;
         }
+
+        public String getLoadCapacityString() {
+            return loadCapacityString;
+        }
+    }
+
+    private LoadCapacity loadCapacity;
+
+    public Truck(String brand, String model, double engineVolume, int maxSpeed, LoadCapacity loadCapacity) {
+        super(brand, model, engineVolume, maxSpeed);
+        this.type = "Truck";
+        this.loadCapacity = loadCapacity;
     }
 
     public void startMovement() {
@@ -38,13 +47,22 @@ public class Truck extends Transport implements Competing {
         System.out.println("Грузовик " + getModel() + " достиг своей макс.скорости на гонке - " + getMaxSpeed() + "км/ч");
     }
 
+    public String getTypeOfTransport() {
+        if (loadCapacity == null) {
+            return "Данных по " + getModel() + "недостаточно";
+        } else {
+            return "Грузоподъемность " + getModel() + " - " + loadCapacity + " (" + loadCapacity.loadCapacityString + ")";
+        }
+
+    }
+
     @Override
     public String toString() {
         return "бренд " + getBrand() +
                 ", модель " + getModel() +
-                ", объем двигателя " + getEngineVolume() + "л" +
-                ", макс.скорость " + getMaxSpeed() + "км/ч" +
-                ", грузоподъемность " + loadCapacity + "кг";
+                ", объем двигателя - " + getEngineVolume() + "л" +
+                ", макс.скорость - " + getMaxSpeed() + "км/ч" +
+                ", грузоподъемность - " + loadCapacity + " (" + loadCapacity.loadCapacityString + ")";
     }
 
     @Override
@@ -61,7 +79,7 @@ public class Truck extends Transport implements Competing {
         return Objects.hash(super.hashCode(), loadCapacity);
     }
 
-    public double getLoadCapacity() {
+    public LoadCapacity getLoadCapacity() {
         return loadCapacity;
     }
 }
