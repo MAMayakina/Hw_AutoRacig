@@ -1,18 +1,25 @@
 package transport;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class Transport {
     public static final String UNKNOW_VALUES = "неизвестно";
+    private static int counterOfTransport;
     public String type;
     private String brand;
     private String model;
     private double engineVolume;
     private int maxSpeed;
+    private static Transport[] ArrayOfTransport = new Transport[0];
 
     public Transport(String brand, String model, double engineVolume, int maxSpeed) {
         this.brand = checkParametr(brand);
         this.model = checkParametr(model);
+        if (!checkParametr(model).equals(UNKNOW_VALUES)) {
+            addNewTransport(this);
+            counterOfTransport++;
+        }
         if (!this.brand.equals(UNKNOW_VALUES) && !this.model.equals(UNKNOW_VALUES)) {
             if (engineVolume < 0) {
                 this.engineVolume = 0;
@@ -25,6 +32,11 @@ public abstract class Transport {
                 this.maxSpeed = maxSpeed;
             }
         }
+    }
+
+    private static void addNewTransport(Transport transport) {
+        ArrayOfTransport = Arrays.copyOf(ArrayOfTransport, getCounterOfTransport() + 1);
+        ArrayOfTransport[getCounterOfTransport()] = transport;
     }
 
     protected String checkParametr(String parametr) {
@@ -50,6 +62,8 @@ public abstract class Transport {
     }
 
     public abstract String getTypeOfTransport();
+
+    public abstract void passDiagnostics() throws NoPassDiagnosticExeption;
 
 
     @Override
@@ -96,5 +110,11 @@ public abstract class Transport {
         return maxSpeed;
     }
 
+    public static int getCounterOfTransport() {
+        return counterOfTransport;
+    }
 
+    public static Transport[] getArrayOfTransport() {
+        return ArrayOfTransport;
+    }
 }

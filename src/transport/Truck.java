@@ -53,7 +53,10 @@ public class Truck extends Transport implements Competing {
         } else {
             return "Грузоподъемность " + getModel() + " - " + loadCapacity + " (" + loadCapacity.loadCapacityString + ")";
         }
+    }
 
+    public void passDiagnostics(){
+        System.out.println("Диагностика у грузовика " + this.getModel() + " пройдена");
     }
 
     @Override

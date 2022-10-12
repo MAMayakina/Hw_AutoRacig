@@ -66,7 +66,10 @@ public class Car extends Transport implements Competing {
         } else {
             return "Тип кузова " + getModel() + " - " + bodyType.type;
         }
+    }
 
+    public void passDiagnostics() {
+        System.out.println("Диагностика у автомобиля " + this.getModel() + " пройдена");
     }
 
     @Override

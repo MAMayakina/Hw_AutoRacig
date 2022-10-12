@@ -63,6 +63,10 @@ public class Bus extends Transport implements Competing {
         }
     }
 
+    public void passDiagnostics() throws NoPassDiagnosticExeption {
+       throw new NoPassDiagnosticExeption("Автобусу "+ this.getModel() +" диагностика не требуется");
+    }
+
     @Override
     public String toString() {
         return "бренд " + getBrand() +
