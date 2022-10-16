@@ -2,7 +2,7 @@ package transport;
 
 import java.util.Objects;
 
-public class Truck extends Transport implements Competing {
+public class Truck extends Transport {
     public enum LoadCapacity {
         N1("полная масса до 3,5т"),
         N2("полная масса свыше 3,5т до 12т"),
@@ -59,13 +59,16 @@ public class Truck extends Transport implements Competing {
         System.out.println("Диагностика у грузовика " + this.getModel() + " пройдена");
     }
 
+
     @Override
     public String toString() {
-        return "бренд " + getBrand() +
+        return "Бренд " + getBrand() +
                 ", модель " + getModel() +
                 ", объем двигателя - " + getEngineVolume() + "л" +
                 ", макс.скорость - " + getMaxSpeed() + "км/ч" +
-                ", грузоподъемность - " + loadCapacity + " (" + loadCapacity.loadCapacityString + ")";
+                ", грузоподъемность - " + loadCapacity + " (" + loadCapacity.loadCapacityString + ")"+
+                ", спонсоры: "+ getSponsorsArrayList() /*+
+                ", механики: " + mechanicsArrayList()*/;
     }
 
     @Override

@@ -12,12 +12,12 @@ public class DriverB<B extends Car> extends Driver {
     public void defineLicenseAndTransport(B car) {
         typeLicense = "B";
         transportLicense = "легковые автомобили";
-        myTransport = car.getModel();
+        myTransport = car;
     }
 
     public void drive() {
-        if (!getMyTransport().equals(UNKNOW_VALUES)) {
-            System.out.println("Водитель автомобиля " + getName() + " управляет " + getMyTransport() + " и будет участвовать в заезде.");
+        if (!getMyTransport().equals(null)) {
+            System.out.println("Водитель автомобиля " + getName() + " управляет " + getMyTransport().getModel() + " и будет участвовать в заезде.");
         } else {
             System.out.println("У водителя " + getName() + " нет автомобиля.");
         }
@@ -38,9 +38,10 @@ public class DriverB<B extends Car> extends Driver {
     @Override
     public String toString() {
         return "Водитель автомобиля " + getName() +
-                ", стаж " + (LocalDate.now().getYear() - yearOfIssueLicenseOfDriver) +
-                ", категория " + typeLicense +
-                " (" + transportLicense + ")" +
-                ", мой автомобиль " + myTransport;
+                " (стаж " + (LocalDate.now().getYear() - yearOfIssueLicenseOfDriver) +
+                ", кат." + typeLicense +
+                " - " + transportLicense +
+                ", автомобиль - " + getMyTransport().getModel() + ")"+
+                ", спонсоры: " + getMyTransport().getSponsorsArrayList();
     }
 }

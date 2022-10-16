@@ -1,12 +1,15 @@
 package driver;
 
 
+import Racig.Sponsor;
 import transport.Competing;
 import transport.NoPassDiagnosticExeption;
 import transport.Transport;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public abstract class Driver<T extends Transport & Competing> {
@@ -16,14 +19,15 @@ public abstract class Driver<T extends Transport & Competing> {
     protected int yearOfIssueLicenseOfDriver;
     protected String typeLicense = UNKNOW_VALUES;
     protected String transportLicense = UNKNOW_VALUES;
-    protected String myTransport = UNKNOW_VALUES;
-    private static Driver[] ArrayOfDriver = new Driver[0];
+    protected Transport myTransport;
+    private static ArrayList<Driver> driversArrayList=new ArrayList<>(100);
+    private ArrayList<Racig.Sponsor> sponsorsArrayList=new ArrayList<>(100);
 
 
     public Driver(String name, int driverExperience) {
         if (name != null && !name.isEmpty() && !name.isBlank()) {
             this.name = name;
-            addNewDriver(this);
+            getDriversArrayList().add(counterOfDriver, this);
             counterOfDriver++;
             if (driverExperience < 0) {
                 this.yearOfIssueLicenseOfDriver = LocalDate.now().getYear();
@@ -33,10 +37,6 @@ public abstract class Driver<T extends Transport & Competing> {
         }
     }
 
-    private static void addNewDriver(Driver driver) {
-        ArrayOfDriver = Arrays.copyOf(ArrayOfDriver, getCounterOfDriver() + 1);
-        ArrayOfDriver[getCounterOfDriver()] = driver;
-    }
 
     public abstract void drive();
 
@@ -54,13 +54,12 @@ public abstract class Driver<T extends Transport & Competing> {
 
     @Override
     public String toString() {
-        return "Driver{" +
-                "name='" + name + '\'' +
-                ", yearOfIssueLicenseOfDriver=" + yearOfIssueLicenseOfDriver +
-                ", typeLicense='" + typeLicense + '\'' +
-                ", transportLicense='" + transportLicense + '\'' +
-                ", myTransport='" + myTransport + '\'' +
-                '}';
+        return "Водитель" + name +
+                "(стаж " + (LocalDate.now().getYear() - yearOfIssueLicenseOfDriver) +
+                ", кат." + typeLicense +
+                " - " + transportLicense +
+                ", транспорт - " + getMyTransport().getModel() + ")"+
+           ", спонсоры: " + getMyTransport().getSponsorsArrayList() ;
     }
 
     @Override
@@ -112,11 +111,12 @@ public abstract class Driver<T extends Transport & Competing> {
         return transportLicense;
     }
 
-    public String getMyTransport() {
+    public Transport getMyTransport() {
+        if (myTransport==null){}
         return myTransport;
     }
 
-    private void setMyTransport(String myTransport) {
+    private void setMyTransport(Transport myTransport) {
         this.myTransport = myTransport;
     }
 
@@ -124,7 +124,12 @@ public abstract class Driver<T extends Transport & Competing> {
         return counterOfDriver;
     }
 
-    public static Driver[] getArrayOfDriver() {
-        return ArrayOfDriver;
+
+    public static ArrayList<Driver> getDriversArrayList() {
+        return driversArrayList;
+    }
+
+    public ArrayList<Sponsor> getSponsorsArrayList() {
+        return getMyTransport().getSponsorsArrayList();
     }
 }

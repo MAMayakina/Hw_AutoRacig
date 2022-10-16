@@ -2,7 +2,7 @@ package transport;
 
 import java.util.Objects;
 
-public class Bus extends Transport implements Competing {
+public class Bus extends Transport {
     public enum CapacityBus {
         ESPECIALLY_SMALL("особо малая", 10),
         SMALL("малая", 25),
@@ -67,13 +67,16 @@ public class Bus extends Transport implements Competing {
        throw new NoPassDiagnosticExeption("Автобусу "+ this.getModel() +" диагностика не требуется");
     }
 
+
     @Override
     public String toString() {
-        return "бренд " + getBrand() +
+        return "Бренд " + getBrand() +
                 ", модель " + getModel() +
                 ", объем двигателя - " + getEngineVolume() + "л" +
                 ", макс.скорость - " + getMaxSpeed() + "км/ч" +
-                ", вместимость - " + capacityBus.capacity + " (макс. число мест " + capacityBus.maxNumber + ")";
+                ", вместимость - " + capacityBus.capacity + " (макс. число мест " + capacityBus.maxNumber + ")"+
+                ", спонсоры: "+ getSponsorsArrayList() /*+
+                ", механики: " + mechanicsArrayList()*/;
     }
 
     @Override

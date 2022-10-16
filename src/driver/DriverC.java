@@ -13,12 +13,12 @@ public class DriverC<C extends Truck> extends Driver{
     public void defineLicenseAndTransport(C truck) {
         typeLicense = "C";
         transportLicense = "грузовики";
-        myTransport = truck.getModel();
+        myTransport = truck;
     }
 
     public void drive() {
         if (!getMyTransport().equals(UNKNOW_VALUES)) {
-            System.out.println("Водитель грузовика " + getName() + " управляет " + getMyTransport() + " и будет участвовать в заезде.");
+            System.out.println("Водитель грузовика " + getName() + " управляет " + getMyTransport().getModel() + " и будет участвовать в заезде.");
         } else {
             System.out.println("У водителя " + getName() + " нет грузовика.");
         }
@@ -39,9 +39,13 @@ public class DriverC<C extends Truck> extends Driver{
     @Override
     public String toString() {
         return "Водитель грузовика " + getName() +
-                ", стаж " + (LocalDate.now().getYear()-yearOfIssueLicenseOfDriver) +
-                ", категория " + typeLicense +
-                " (" + transportLicense + ")" +
-                ", мой грузовик " + myTransport;
+                " (стаж " + (LocalDate.now().getYear()-yearOfIssueLicenseOfDriver) +
+                ", кат." + typeLicense +
+                " - " + transportLicense  +
+                ", грузовик " + getMyTransport().getModel()+ ")"+
+                ", спонсоры: " + getMyTransport().getSponsorsArrayList() ;
+
+
+
     }
 }

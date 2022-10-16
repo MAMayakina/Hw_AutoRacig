@@ -3,7 +3,7 @@ package transport;
 import java.util.Objects;
 
 
-public class Car extends Transport implements Competing {
+public class Car extends Transport {
 
     public enum BodyType {
         SEDAN("седан"),
@@ -72,14 +72,19 @@ public class Car extends Transport implements Competing {
         System.out.println("Диагностика у автомобиля " + this.getModel() + " пройдена");
     }
 
+
+
+
     @Override
     public String toString() {
-        return "бренд " + getBrand() +
+        return "Бренд " + getBrand() +
                 ", модель " + getModel() +
                 ", тип кузова - " + bodyType.type +
                 ", объем двигателя - " + getEngineVolume() + "л" +
                 ", макс.скорость - " + getMaxSpeed() + "км/ч" +
-                ", цвет - " + color;
+                ", цвет - " + color +
+                ", спонсоры: " + getSponsorsArrayList() /*+
+                ", механики: " + mechanicsArrayList()*/;
     }
 
     @Override

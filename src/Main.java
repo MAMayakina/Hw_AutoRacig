@@ -1,3 +1,6 @@
+import Racig.Mechanic;
+import Racig.ServiceStation;
+import Racig.Sponsor;
 import driver.Driver;
 import driver.DriverB;
 import driver.DriverC;
@@ -7,12 +10,13 @@ import transport.Bus.CapacityBus;
 import transport.Car.BodyType;
 import transport.Truck.LoadCapacity;
 
+
 public class Main {
 
     public static void doDiagnostics() throws NoPassDiagnosticExeption {
-        for (int i = 0; i < Transport.getArrayOfTransport().length; i++) {
+        for (int i = 0; i < Transport.getTransportArrayList().size(); i++) {
             try {
-                Transport.getArrayOfTransport()[i].passDiagnostics();
+                Transport.getTransportArrayList().get(i).passDiagnostics();
             } catch (NoPassDiagnosticExeption e) {
                 System.out.println(e.getMessage());
             }
@@ -20,8 +24,8 @@ public class Main {
     }
 
     public static void checkDriverLicense() throws NoPassDiagnosticExeption {
-        for (int i = 0; i < Driver.getArrayOfDriver().length; i++) {
-            Driver.getArrayOfDriver()[i].checkDriverLicense();
+        for (int i = 0; i < Driver.getDriversArrayList().size(); i++) {
+            Driver.getDriversArrayList().get(i).checkDriverLicense();
         }
     }
 
@@ -50,9 +54,68 @@ public class Main {
         DriverC<Truck> driver4 = new DriverC<Truck>("Михаил", 4);
         //driver4.defineLicenseAndTransport(truck4);
 
+        //Спонсоры
+        System.out.println("***** Спонсоры");
+        Sponsor sponsor1 = new Sponsor("Петр", true, 10000);
+        Sponsor sponsor2 = new Sponsor("Иван", true, 50000);
+        Sponsor sponsor3 = new Sponsor("ООО Ромашка", false, 200000);
 
-        doDiagnostics();
+        car1.getSponsorsArrayList().add(sponsor1);
+        car1.getSponsorsArrayList().add(sponsor2);
+        bus1.getSponsorsArrayList().add(sponsor3);
+        truck1.getSponsorsArrayList().add(sponsor3);
 
-        checkDriverLicense();
+        sponsor1.printTransportForSponsorship();
+        sponsor2.printTransportForSponsorship();
+        sponsor3.printTransportForSponsorship();
+
+        car1.printSponsors();
+        bus1.printSponsors();
+        truck1.printSponsors();
+
+        //Механики
+        System.out.println();
+        System.out.println("***** Механики");
+        Mechanic mechanic1 = new Mechanic("Виктор", "Игнатьев", "Руль, колеса, фары");
+        Mechanic mechanic2 = new Mechanic("Олег", "Боков", "Не тормози");
+        Mechanic mechanic3 = new Mechanic("Юрий", "Красилов", "Лучшие в своем деле");
+        mechanic1.getTransportForMaintenance().add(car1);
+        mechanic2.getTransportForMaintenance().add(truck1);
+        mechanic3.getTransportForMaintenance().add(truck1);
+        mechanic3.getTransportForMaintenance().add(bus1);
+
+        mechanic1.printTransportForMaintenance();
+        mechanic2.printTransportForMaintenance();
+        mechanic3.printTransportForMaintenance();
+
+        car1.printMechanics();
+        truck1.printMechanics();
+        bus1.printMechanics();
+
+        //Общая информация по  транспорту и водителям
+        System.out.println();
+        System.out.println("***** Общая информация по  транспорту и водителям");
+        System.out.println(car1);
+        System.out.println(bus1);
+        System.out.println(truck1);
+        System.out.println(driver1);
+        System.out.println(driver2);
+        System.out.println(driver3);
+
+        //Тех.осмотр
+        System.out.println();
+        System.out.println("***** Тех.осмотр");
+        ServiceStation serviceStation = new ServiceStation();
+        serviceStation.addTransportToServiceStation(car1);
+        serviceStation.addTransportToServiceStation(car2);
+        serviceStation.addTransportToServiceStation(car3);
+        serviceStation.addTransportToServiceStation(car4);
+        serviceStation.addTransportToServiceStation(truck1);
+        serviceStation.addTransportToServiceStation(truck2);
+        serviceStation.addTransportToServiceStation(truck3);
+        serviceStation.addTransportToServiceStation(truck4);
+        serviceStation.addTransportToServiceStation(bus1);
+        serviceStation.passService();
+
     }
 }
