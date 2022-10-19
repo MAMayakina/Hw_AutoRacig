@@ -67,8 +67,7 @@ public class Truck extends Transport {
                 ", объем двигателя - " + getEngineVolume() + "л" +
                 ", макс.скорость - " + getMaxSpeed() + "км/ч" +
                 ", грузоподъемность - " + loadCapacity + " (" + loadCapacity.loadCapacityString + ")"+
-                ", спонсоры: "+ getSponsorsArrayList() /*+
-                ", механики: " + mechanicsArrayList()*/;
+                ", спонсоры: "+ getSponsorsSet();
     }
 
     @Override

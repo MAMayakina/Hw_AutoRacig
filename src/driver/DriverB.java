@@ -42,6 +42,6 @@ public class DriverB<B extends Car> extends Driver {
                 ", кат." + typeLicense +
                 " - " + transportLicense +
                 ", автомобиль - " + getMyTransport().getModel() + ")"+
-                ", спонсоры: " + getMyTransport().getSponsorsArrayList();
+                ", спонсоры: " + getMyTransport().getSponsorsSet();
     }
 }

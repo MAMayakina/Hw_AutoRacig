@@ -75,8 +75,7 @@ public class Bus extends Transport {
                 ", объем двигателя - " + getEngineVolume() + "л" +
                 ", макс.скорость - " + getMaxSpeed() + "км/ч" +
                 ", вместимость - " + capacityBus.capacity + " (макс. число мест " + capacityBus.maxNumber + ")"+
-                ", спонсоры: "+ getSponsorsArrayList() /*+
-                ", механики: " + mechanicsArrayList()*/;
+                ", спонсоры: "+ getSponsorsSet() ;
     }
 
     @Override

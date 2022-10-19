@@ -2,15 +2,16 @@ package Racig;
 
 import transport.Transport;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Sponsor {
     private String nameSponsor;
     private boolean typeOfSponsor; // true - физ.лицо, 0 - компания
     private int amountOfSponsorship;
-    private static ArrayList<Sponsor> sponsorsArrayList = new ArrayList<>(100);
-    private ArrayList<Transport> transportForSponsorship = new ArrayList<Transport>(10);
+    private static Set<Sponsor> sponsorsSet = new HashSet<>();
+    private Set<Transport> transportForSponsorship = new HashSet<>();
 
     public Sponsor(String nameSponsor, boolean typeOfSponsor, int amountOfSponsorship) {
         if (nameSponsor != null && !nameSponsor.isEmpty() && !nameSponsor.isBlank()) {
@@ -25,18 +26,24 @@ public class Sponsor {
     }
 
     private void fillTransportForSponsorship() {
-        for (int i = 0; i < Transport.getTransportArrayList().size(); i++) {
-            if (Transport.getTransportArrayList().get(i).getSponsorsArrayList().contains(this)) {
-                transportForSponsorship.add(Transport.getTransportArrayList().get(i));
+        for (Transport transport : Transport.getTransportSet()) {
+            if (transport.getSponsorsSet().contains(this)) {
+                transportForSponsorship.add(transport);
             }
         }
     }
 
     public void printTransportForSponsorship() {
         fillTransportForSponsorship();
-        System.out.print(nameSponsor + " спонсирует в заезде "+ transportForSponsorship.get(0).getModel());
-        for (int i = 1; i < transportForSponsorship.size(); i++) {
-            System.out.print(", " + transportForSponsorship.get(i).getModel());
+        int commaCheck = transportForSponsorship.size();
+        System.out.print(nameSponsor + " спонсирует в заезде ");
+        for (Transport transport : transportForSponsorship) {
+            if (commaCheck == transportForSponsorship.size()) {
+                System.out.print(transport.getModel());
+            } else {
+                System.out.print(", " + transport.getModel());
+            }
+            commaCheck--;
         }
         System.out.println();
     }
@@ -61,7 +68,7 @@ public class Sponsor {
     }
 
     public String getNameSponsor() {
-            return nameSponsor;
+        return nameSponsor;
 
     }
 
@@ -85,7 +92,7 @@ public class Sponsor {
         }
     }
 
-    public ArrayList<Sponsor> getSponsorsArrayList() {
-        return sponsorsArrayList;
+    public Set<Sponsor> getSponsorsSet() {
+        return sponsorsSet;
     }
 }

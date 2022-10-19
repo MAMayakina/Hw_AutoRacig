@@ -2,17 +2,15 @@ package driver;
 
 
 import Racig.Sponsor;
-import transport.Competing;
-import transport.NoPassDiagnosticExeption;
 import transport.Transport;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-public abstract class Driver<T extends Transport & Competing> {
+public abstract class Driver<T extends Transport> {
     public static final String UNKNOW_VALUES = "неизвестно";
     private static int counterOfDriver;
     private String name;
@@ -20,14 +18,14 @@ public abstract class Driver<T extends Transport & Competing> {
     protected String typeLicense = UNKNOW_VALUES;
     protected String transportLicense = UNKNOW_VALUES;
     protected Transport myTransport;
-    private static ArrayList<Driver> driversArrayList=new ArrayList<>(100);
-    private ArrayList<Racig.Sponsor> sponsorsArrayList=new ArrayList<>(100);
+    private static Set<Driver> driversArrayList = new HashSet<>();
+    private Set<Racig.Sponsor> sponsorsArrayList = new HashSet<>();
 
 
     public Driver(String name, int driverExperience) {
         if (name != null && !name.isEmpty() && !name.isBlank()) {
             this.name = name;
-            getDriversArrayList().add(counterOfDriver, this);
+            getDriversArrayList().add(this);
             counterOfDriver++;
             if (driverExperience < 0) {
                 this.yearOfIssueLicenseOfDriver = LocalDate.now().getYear();
@@ -46,8 +44,8 @@ public abstract class Driver<T extends Transport & Competing> {
 
     public abstract void refuelTransport();
 
-    public void checkDriverLicense() throws RuntimeException{
-        if(this.getTypeLicense().equals(UNKNOW_VALUES)){
+    public void checkDriverLicense() throws RuntimeException {
+        if (this.getTypeLicense().equals(UNKNOW_VALUES)) {
             throw new RuntimeException("Необходимо указать тип прав!");
         }
     }
@@ -58,8 +56,8 @@ public abstract class Driver<T extends Transport & Competing> {
                 "(стаж " + (LocalDate.now().getYear() - yearOfIssueLicenseOfDriver) +
                 ", кат." + typeLicense +
                 " - " + transportLicense +
-                ", транспорт - " + getMyTransport().getModel() + ")"+
-           ", спонсоры: " + getMyTransport().getSponsorsArrayList() ;
+                ", транспорт - " + getMyTransport().getModel() + ")" +
+                ", спонсоры: " + getMyTransport().getSponsorsSet();
     }
 
     @Override
@@ -112,7 +110,8 @@ public abstract class Driver<T extends Transport & Competing> {
     }
 
     public Transport getMyTransport() {
-        if (myTransport==null){}
+        if (myTransport == null) {
+        }
         return myTransport;
     }
 
@@ -125,11 +124,11 @@ public abstract class Driver<T extends Transport & Competing> {
     }
 
 
-    public static ArrayList<Driver> getDriversArrayList() {
+    public static Set<Driver> getDriversArrayList() {
         return driversArrayList;
     }
 
-    public ArrayList<Sponsor> getSponsorsArrayList() {
-        return getMyTransport().getSponsorsArrayList();
+    public Set<Sponsor> getSponsorsArrayList() {
+        return getMyTransport().getSponsorsSet();
     }
 }

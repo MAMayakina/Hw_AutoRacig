@@ -44,7 +44,7 @@ public class DriverD<D extends Bus> extends Driver{
                 ", кат." + typeLicense +
                 " - " + transportLicense +
                 ", автобус " + getMyTransport().getModel() + ")"+
-                ", спонсоры: " + getMyTransport().getSponsorsArrayList() ;
+                ", спонсоры: " + getMyTransport().getSponsorsSet() ;
     }
 
 

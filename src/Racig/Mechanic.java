@@ -2,33 +2,39 @@ package Racig;
 
 import transport.Transport;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Mechanic {
     private String firstName;
     private String lastName;
     private String company;
     private static int counterOfMechanics;
-    private static ArrayList<Mechanic> mechanicsArrayList = new ArrayList<Mechanic>(1000);
-    private ArrayList<Transport> transportForMaintenance = new ArrayList<Transport>(10);
+    private static Set<Mechanic> mechanicsSet = new HashSet<>();
+    private Set<Transport> transportForMaintenance = new HashSet<>();
 
     public Mechanic(String firstName, String lastName, String company) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.company = company;
-        mechanicsArrayList.add(counterOfMechanics, this);
+        mechanicsSet.add(this);
         counterOfMechanics++;
     }
 
     public void printTransportForMaintenance() {
-        System.out.print("Я " + firstName + " " + lastName + " (" + company + ") и я обслуживаю транспорт " + transportForMaintenance.get(0).getModel());
-        for (int i = 1; i < transportForMaintenance.size(); i++) {
-            System.out.print(", " + transportForMaintenance.get(i).getModel());
+        int commaCheck = transportForMaintenance.size();
+        System.out.print("Я " + firstName + " " + lastName + " (" + company + ") и я обслуживаю транспорт ");
+        for (Transport transport : transportForMaintenance) {
+            if (commaCheck == transportForMaintenance.size()) {
+                System.out.print(transport.getModel());
+            } else {
+                System.out.print(", " + transport.getModel());
+            }
+            commaCheck--;
         }
         System.out.println();
     }
-
 
     @Override
     public String toString() {
@@ -70,11 +76,11 @@ public class Mechanic {
         }
     }
 
-    public static ArrayList<Mechanic> getMechanicsArrayList() {
-        return mechanicsArrayList;
+    public static Set<Mechanic> getMechanicsSet() {
+        return mechanicsSet;
     }
 
-    public ArrayList<Transport> getTransportForMaintenance() {
+    public Set<Transport> getTransportForMaintenance() {
         return transportForMaintenance;
     }
 }

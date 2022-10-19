@@ -3,10 +3,11 @@ package transport;
 import Racig.Mechanic;
 import Racig.Sponsor;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-public abstract class Transport{
+public abstract class Transport {
     public String type;
     private String brand;
     private String model;
@@ -14,16 +15,16 @@ public abstract class Transport{
     private int maxSpeed;
     public static final String UNKNOW_VALUES = "неизвестно";
     private static int counterOfTransport;
-    private static ArrayList<Transport> transportArrayList = new ArrayList<>(100);
-    private ArrayList<Sponsor> sponsorsArrayList = new ArrayList<Sponsor>(100);
-    private ArrayList<Mechanic> myMechanics = new ArrayList<Mechanic>(10);
+    private static Set<Transport> transportSet = new HashSet<>();
+    private Set<Sponsor> sponsorsSet = new HashSet<>();
+    private Set<Mechanic> myMechanics = new HashSet<>();
 
 
     public Transport(String brand, String model, double engineVolume, int maxSpeed) {
         this.brand = checkParametr(brand);
         this.model = checkParametr(model);
         if (!checkParametr(model).equals(UNKNOW_VALUES)) {
-            transportArrayList.add(counterOfTransport, this);
+            transportSet.add(this);
             counterOfTransport++;
         }
         if (!this.brand.equals(UNKNOW_VALUES) && !this.model.equals(UNKNOW_VALUES)) {
@@ -68,29 +69,37 @@ public abstract class Transport{
     public abstract void passDiagnostics() throws NoPassDiagnosticExeption;
 
     protected void fillMechanics() {
-        for (int i = 0; i < Mechanic.getMechanicsArrayList().size(); i++) {
-            if (Mechanic.getMechanicsArrayList().get(i).getTransportForMaintenance().contains(this)) {
-                myMechanics.add(Mechanic.getMechanicsArrayList().get(i));
+        for (Mechanic mechanic : Mechanic.getMechanicsSet()) {
+            if (mechanic.getTransportForMaintenance().contains(this)) {
+                myMechanics.add(mechanic);
             }
         }
     }
 
     public void printMechanics() {
         fillMechanics();
-        System.out.print("Механики " + this.getModel() + ": " + myMechanics.get(0).getFirstName() + " " + myMechanics.get(0).getLastName() + " (" + myMechanics.get(0).getCompany() + ")");
-        for (int i = 1; i < myMechanics.size(); i++) {
-            System.out.print(", " + myMechanics.get(i).getFirstName() + " " + myMechanics.get(i).getLastName() + " (" + myMechanics.get(i).getCompany() + ")");
+        int commaCheck = myMechanics.size();
+        for (Mechanic myMechanic : myMechanics) {
+            if (commaCheck == myMechanics.size()) {
+                System.out.print(myMechanic.getFirstName() + " " + myMechanic.getLastName() + " (" + myMechanic.getCompany() + ")");
+            } else {
+                System.out.print(", " + myMechanic.getFirstName() + " " + myMechanic.getLastName() + " (" + myMechanic.getCompany() + ")");
+            }
+            commaCheck--;
         }
         System.out.println();
     }
 
     public void printSponsors() {
-        System.out.print("Спонсоры " + this.getModel() + ": " + sponsorsArrayList.get(0).getNameSponsor() + " на сумму " + sponsorsArrayList.get(0).getAmountOfSponsorship());
-        for (int i = 1; i < sponsorsArrayList.size(); i++) {
-            System.out.print(", " + sponsorsArrayList.get(i).getNameSponsor() + " на сумму " + sponsorsArrayList.get(0).getAmountOfSponsorship());
+        int commaCheck = sponsorsSet.size();
+        for (Sponsor sponsor : sponsorsSet) {
+            if (commaCheck == sponsorsSet.size()) {
+                System.out.print(sponsor.getNameSponsor() + " выделяет сумму " + sponsor.getAmountOfSponsorship());
+            } else {
+                System.out.print(", " + sponsor.getNameSponsor() + " выделяет сумму " + sponsor.getAmountOfSponsorship());
+            }
+            commaCheck--;
         }
-        System.out.println();
-
     }
 
 
@@ -100,8 +109,7 @@ public abstract class Transport{
                 ", модель " + model +
                 ", объем двигателя " + engineVolume + "л" +
                 ", макс.скорость " + maxSpeed + "км/ч" +
-                ", спонсоры: " + getSponsorsArrayList() /*+
-                ", механики: " + this.mechanicsArrayList()*/;
+                ", спонсоры: " + getSponsorsSet();
     }
 
     @Override
@@ -144,15 +152,15 @@ public abstract class Transport{
         return counterOfTransport;
     }
 
-    public static ArrayList<Transport> getTransportArrayList() {
-        return transportArrayList;
+    public static Set<Transport> getTransportSet() {
+        return transportSet;
     }
 
-    public ArrayList<Sponsor> getSponsorsArrayList() {
-        return sponsorsArrayList;
+    public Set<Sponsor> getSponsorsSet() {
+        return sponsorsSet;
     }
 
-    public ArrayList getMyMechanics() {
+    public Set getMyMechanics() {
         return myMechanics;
     }
 }

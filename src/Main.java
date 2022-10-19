@@ -10,13 +10,15 @@ import transport.Bus.CapacityBus;
 import transport.Car.BodyType;
 import transport.Truck.LoadCapacity;
 
+import static Racig.Mechanic.*;
+
 
 public class Main {
 
     public static void doDiagnostics() throws NoPassDiagnosticExeption {
-        for (int i = 0; i < Transport.getTransportArrayList().size(); i++) {
+        for (Transport transport : Transport.getTransportSet()) {
             try {
-                Transport.getTransportArrayList().get(i).passDiagnostics();
+                transport.passDiagnostics();
             } catch (NoPassDiagnosticExeption e) {
                 System.out.println(e.getMessage());
             }
@@ -24,8 +26,8 @@ public class Main {
     }
 
     public static void checkDriverLicense() throws NoPassDiagnosticExeption {
-        for (int i = 0; i < Driver.getDriversArrayList().size(); i++) {
-            Driver.getDriversArrayList().get(i).checkDriverLicense();
+        for (Driver driver : Driver.getDriversArrayList()) {
+            driver.checkDriverLicense();
         }
     }
 
@@ -60,10 +62,10 @@ public class Main {
         Sponsor sponsor2 = new Sponsor("Иван", true, 50000);
         Sponsor sponsor3 = new Sponsor("ООО Ромашка", false, 200000);
 
-        car1.getSponsorsArrayList().add(sponsor1);
-        car1.getSponsorsArrayList().add(sponsor2);
-        bus1.getSponsorsArrayList().add(sponsor3);
-        truck1.getSponsorsArrayList().add(sponsor3);
+        car1.getSponsorsSet().add(sponsor1);
+        car1.getSponsorsSet().add(sponsor2);
+        bus1.getSponsorsSet().add(sponsor3);
+        truck1.getSponsorsSet().add(sponsor3);
 
         sponsor1.printTransportForSponsorship();
         sponsor2.printTransportForSponsorship();
@@ -79,10 +81,15 @@ public class Main {
         Mechanic mechanic1 = new Mechanic("Виктор", "Игнатьев", "Руль, колеса, фары");
         Mechanic mechanic2 = new Mechanic("Олег", "Боков", "Не тормози");
         Mechanic mechanic3 = new Mechanic("Юрий", "Красилов", "Лучшие в своем деле");
+        Mechanic mechanic4 = new Mechanic("Виктор", "Игнатьев", "Руль, колеса, фары");
         mechanic1.getTransportForMaintenance().add(car1);
         mechanic2.getTransportForMaintenance().add(truck1);
         mechanic3.getTransportForMaintenance().add(truck1);
         mechanic3.getTransportForMaintenance().add(bus1);
+
+        System.out.println();
+        System.out.println("Попытка вывести дубль механика "+ getMechanicsSet());
+        System.out.println();
 
         mechanic1.printTransportForMaintenance();
         mechanic2.printTransportForMaintenance();

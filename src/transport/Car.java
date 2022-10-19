@@ -83,8 +83,7 @@ public class Car extends Transport {
                 ", объем двигателя - " + getEngineVolume() + "л" +
                 ", макс.скорость - " + getMaxSpeed() + "км/ч" +
                 ", цвет - " + color +
-                ", спонсоры: " + getSponsorsArrayList() /*+
-                ", механики: " + mechanicsArrayList()*/;
+                ", спонсоры: " + getSponsorsSet() ;
     }
 
     @Override

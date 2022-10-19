@@ -43,7 +43,7 @@ public class DriverC<C extends Truck> extends Driver{
                 ", кат." + typeLicense +
                 " - " + transportLicense  +
                 ", грузовик " + getMyTransport().getModel()+ ")"+
-                ", спонсоры: " + getMyTransport().getSponsorsArrayList() ;
+                ", спонсоры: " + getMyTransport().getSponsorsSet() ;
 
 
 
